@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	  <title>
+	      Cover Finder
+	  </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+    <link rel="stylesheet" href="./css/master.css" type="text/css" media="screen" charset="utf-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+    <script src="./js/app.js"></script>    
+  </head>
+<body>
+  <div id="searchbox">
+    <fieldset>
+      <input type="search" name="show_title" value="" id="show_title" placeholder="Type a show name…" />      
+    </fieldset>
+    <ul id="results">
+      
+    </ul>      
+    <div style="clear: both">
+      &nbsp;
+    </div>
+  </div>
+  <script type="text/javascript" charset="utf-8">
+    $('#show_title').keyup( function() {
+      var text = $('#show_title').val();
+      if (text.length >= 3) {
+        var queryURLs = [];
+        queryURLs.push(iTunesSearch.basicMetadataURL(text, "us"));
+        queryURLs.push(iTunesSearch.basicMetadataURL(text, "de"));
+        $('#results').empty();
+
+        for (var i=0; i < queryURLs.length; i++) {
+          $.getJSON(queryURLs[i], function(data) {
+            var results = data.results;
+
+            console.log("got " + results.length + " results")
+
+            var index;
+            for (index = 0; index < results.length; index++) {
+              var result = results[index];
+              if ($('#' + result.collectionId.toString()).length == 0) {
+                $('#results').append(iTunesSearch.showHTMLFromResult(result));                
+              }
+            }      
+          });           
+        };
+             
+      }
+
+    });
+  </script>  
+</body>
+</html>
