@@ -26,10 +26,17 @@
 
     $('#show_title').keyup( function() {
       var text = $('#show_title').val();
+      
+      if (text.length == 0) {
+        $('#results').empty();
+        return;
+      }
+      
       if (text.length >= 3) {
         var queryURLs = [];
         queryURLs.push(iTunesSearch.basicMetadataURL(text, "us"));
         queryURLs.push(iTunesSearch.basicMetadataURL(text, "de"));
+        queryURLs.push(iTunesSearch.basicMetadataURL(text, "uk"));        
         
 
         
