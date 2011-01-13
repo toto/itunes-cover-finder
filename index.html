@@ -29,11 +29,9 @@
       if (text.length >= 3) {
         var queryURLs = [];
         queryURLs.push(iTunesSearch.basicMetadataURL(text, "us"));
-        //queryURLs.push(iTunesSearch.basicMetadataURL(text, "de"));
+        queryURLs.push(iTunesSearch.basicMetadataURL(text, "de"));
         
 
-        
-        return;
         
         $('#results').empty();
 
@@ -42,24 +40,21 @@
           $.ajax({
             dataType: 'jsonp',
             url: queryURLs[i],
-            success: function(data) {
-              console.log("success callback");
-            },
-          });          
-          /*
-          $.getJSON(, function(data) {
-            var results = data.results;
+            success: function (data) {  
+              var results = data.results;
 
-            console.log("got " + results.length + " results")
+              console.log("got " + results.length + " results")
 
-            var index;
-            for (index = 0; index < results.length; index++) {
-              var result = results[index];
-              if ($('#' + result.collectionId.toString()).length == 0) {
-                $('#results').append(iTunesSearch.showHTMLFromResult(result));                
+              var index;
+              for (index = 0; index < results.length; index++) {
+                var result = results[index];
+                if ($('#' + result.collectionId.toString()).length == 0) {
+                  $('#results').append(iTunesSearch.showHTMLFromResult(result));                
+                }
               }
-            }      
-          });     */      
+
+            }
+          });      
         }    
       }
     });
